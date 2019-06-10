@@ -1,0 +1,15 @@
+FROM python:3.7
+ENV PATH /usr/local/bin:$PATH
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+CMD scrapy crawl quotes
+
+
+第一行的FROM代表使用Docker基础镜像  这里直接使用Python3.7镜像,在此基础上运行Scrapy项目
+第二行ENV是环境变量设置,将/usr/local/bin:$PATH赋值给PATH,即增加/usr/local/bin这个环境变量
+第三行ADD是 将本地的代码放置到 虚拟容器中。它有两个参数:第一个参数是.,代表本地当前路径;第二个参数是/code,代表虚拟容器中的路径,也就是
+将本地项目所有内容放置到虚拟容器的/code目录下,以便于在虚拟容器中运行代码
+第四行WORKDIR指定工作目录,这里将刚才添加的代码路径设成工作路径。这个路径下的目录结构和当前本地目录结构是相同的。可以直接执行库安装命令、爬虫运行命令等。
+第五行RUN是执行某些命令来做一些环境准备工作。由于Docker虚拟容器内只有Python3环境,而没有所需要的Python库,所以我们运行此命令来在虚拟容器中安装相应的Python库如Scrapy,这样就可以在虚拟容器中执行Scrapy命令了。
+第六行CMD是容器启动命令。在容器运行时,此命令会被执行。这里直接用scrapy crawl quotes来启动爬虫。
