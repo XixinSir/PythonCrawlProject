@@ -1,0 +1,7 @@
+Downloader Middleware在整个架构中起作用的位置是以下两个:
+
+1、在Scheduler调度处队列的Request发送给Downloader下载之前,也就是在Request执行下载之前对其进行修改
+2、在下载生成的Response发送给Spider之前,也就是在生成Response被Spider解析之前对其进行修改
+
+Downloader Middleware功能十分强大,修改User-Agent、处理重定向、设置代理、失败重试、设置Cookies等功能都需要借助它来实现
+
